@@ -1,8 +1,8 @@
-require 'error'
-require 'mars_plateu'
-require 'rover'
+require 'mars_rovers/error'
+require 'mars_rovers/mars_plateu'
+require 'mars_rovers/rover'
 
-module Mars
+module MarsRovers
 
   module FileParser
 
@@ -16,7 +16,7 @@ module Mars
 
           begin
             File.open(path) do |f|
-              result[:planet] = MarsPlateu.new(*f.readline.strip.split)
+              result[:planet] = _get_planet_class.new(*f.readline.strip.split)
 
               f.each_slice(2) do |rover_config|
                 rover = _rover_by_config(rover_config)
@@ -34,13 +34,23 @@ module Mars
         end
       end
 
-      private def _rover_by_config(rover_config)
+      private
+      
+      def _rover_by_config(rover_config)
         if rover_config.size == 2 && !rover_config.include?("\n")
           {
-            obj: Rover.new(*rover_config.first.strip.split),
+            obj: _get_rover_class.new(*rover_config.first.strip.split),
             commands: rover_config.last.strip
           }
         end
+      end
+
+      def _get_rover_class
+        Rover
+      end
+
+      def _get_planet_class
+        MarsPlateu
       end
 
     end

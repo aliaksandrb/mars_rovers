@@ -1,18 +1,19 @@
-require 'minitest/autorun'
+require_relative './test_helper'
 
-require 'error'
-require 'file_parser'
+require 'mars_rovers/file_parser'
 
 FIXTURE_EXAMPLE_PATH = 'tests/fixtures/input.txt'
 
 class TestFileParser < Minitest::Test
 
   def test_unxistent_input_file_raises_error
-    assert_raises(Mars::Error) { Mars::FileParser.parse!('abc.txt') }
+    assert_raises(MarsRovers::Error) do
+      MarsRovers::FileParser.parse!('abc.txt')
+    end
   end
 
   def test_load_config_into_data
-    data = Mars::FileParser.parse!(FIXTURE_EXAMPLE_PATH)
+    data = MarsRovers::FileParser.parse!(FIXTURE_EXAMPLE_PATH)
 
     assert_equal 5, data[:planet].x
     assert_equal 5, data[:planet].y

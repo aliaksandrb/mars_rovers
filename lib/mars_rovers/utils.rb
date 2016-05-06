@@ -1,6 +1,6 @@
-require 'error'
+require 'mars_rovers/error'
 
-module Mars
+module MarsRovers
   module Utils
     private
 

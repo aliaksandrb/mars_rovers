@@ -1,7 +1,7 @@
-require 'error'
-require 'utils'
+require 'mars_rovers/error'
+require 'mars_rovers/utils'
 
-module Mars
+module MarsRovers
 
   class Rover
     include Utils
@@ -17,7 +17,7 @@ module Mars
     attr_accessor :x, :y, :orientation
     attr_reader :planet
 
-    def initialize(x = nil, y = nil, orientation = nil) # make default 0,0, N?
+    def initialize(x = nil, y = nil, orientation = nil)
       unless x && y && orientation
         raise Error.new(
           'Should be initialized with x and y position coordinates '\
