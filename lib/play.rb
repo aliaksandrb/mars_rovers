@@ -1,11 +1,11 @@
-require 'file_parser'
+require 'mars_rovers/file_parser'
 
-module Mars
-  VERSION = '0.0.1'
+module MarsRovers
+  VERSION = '0.0.2'
 
   module Play
     def self.run(file_path)
-      parsed_data = Mars::FileParser.parse!(file_path)
+      parsed_data = FileParser.parse!(file_path)
       rovers = parsed_data[:rovers]
       planet = parsed_data[:planet]
       result = ''
@@ -21,6 +21,7 @@ module Mars
         result << "#{rover.x} #{rover.y} #{rover.orientation}\n"
       end
 
+      puts
       puts result
       result.strip
     end

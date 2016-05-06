@@ -1,7 +1,7 @@
-require 'error'
-require 'utils'
+require 'mars_rovers/error'
+require 'mars_rovers/utils'
 
-module Mars
+module MarsRovers
 
   class MarsPlateu
     include Utils

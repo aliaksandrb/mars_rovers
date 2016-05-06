@@ -1,35 +1,34 @@
-require 'minitest/autorun'
+require_relative './test_helper'
 
-require 'error'
-require 'mars_plateu'
-require 'rover'
+require 'mars_rovers/mars_plateu'
+require 'mars_rovers/rover'
 
 class TestRover < Minitest::Test
   def setup
-    @rover = Mars::Rover.new(5, 5, 'N')
+    @rover = MarsRovers::Rover.new(5, 5, 'N')
   end
 
   def test_should_be_initialized_with_position_and_orientation
-    assert_raises(Mars::Error) { Mars::Rover.new }
+    assert_raises(MarsRovers::Error) { MarsRovers::Rover.new }
   end
 
   def test_initialized_with_position_and_orientation
-    rover = Mars::Rover.new(1, 5, 'S')
+    rover = MarsRovers::Rover.new(1, 5, 'S')
     assert_equal 1, rover.x
     assert_equal 5, rover.y
     assert_equal 'S', rover.orientation
   end
 
   def test_should_be_initialized_with_postitive_numbers
-    assert_raises(Mars::Error) { Mars::Rover.new('xfdsf', 5, 'N') }
+    assert_raises(MarsRovers::Error) { MarsRovers::Rover.new('xfdsf', 5, 'N') }
   end
 
   def test_rover_orientation_restricted_by_defined_list
-    assert_raises(Mars::Error) { Mars::Rover.new(1, 5, 'X') }
+    assert_raises(MarsRovers::Error) { MarsRovers::Rover.new(1, 5, 'X') }
   end
 
   def test_could_change_position_and_orientation
-    rover = Mars::Rover.new(1, 5, 'S')
+    rover = MarsRovers::Rover.new(1, 5, 'S')
     rover.x = 2
     rover.y = 1
     rover.orientation = 'N'
@@ -116,26 +115,26 @@ class TestRover < Minitest::Test
   end
 
   def test_rover_could_not_be_sent_back_or_another_planet
-    home = Mars::MarsPlateu.new(9, 9)
+    home = MarsRovers::MarsPlateu.new(9, 9)
     @rover.send_to_planet(_mars)
 
-    assert_raises(Mars::Error) { @rover.send_to_planet(home) }
+    assert_raises(MarsRovers::Error) { @rover.send_to_planet(home) }
   end
 
   def test_could_not_land_on_small_planet
-    assert_raises(Mars::Error) do
-      @rover.send_to_planet(Mars::MarsPlateu.new(1, 1))
+    assert_raises(MarsRovers::Error) do
+      @rover.send_to_planet(MarsRovers::MarsPlateu.new(1, 1))
     end
 
-    assert_raises(Mars::Error) do
-      @rover.send_to_planet(Mars::MarsPlateu.new(10, 4))
+    assert_raises(MarsRovers::Error) do
+      @rover.send_to_planet(MarsRovers::MarsPlateu.new(10, 4))
     end
 
-    assert_raises(Mars::Error) do
-      @rover.send_to_planet(Mars::MarsPlateu.new(4, 10))
+    assert_raises(MarsRovers::Error) do
+      @rover.send_to_planet(MarsRovers::MarsPlateu.new(4, 10))
     end
 
-    same_size_planet = Mars::MarsPlateu.new(5, 5)
+    same_size_planet = MarsRovers::MarsPlateu.new(5, 5)
     assert_equal same_size_planet, @rover.send_to_planet(same_size_planet)
   end
 
@@ -193,6 +192,6 @@ class TestRover < Minitest::Test
   private
 
   def _mars
-    @mars ||= Mars::MarsPlateu.new(6, 6)
+    @mars ||= MarsRovers::MarsPlateu.new(6, 6)
   end
 end

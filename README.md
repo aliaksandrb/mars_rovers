@@ -17,9 +17,9 @@ $ rake # to run the tests suite
 
 $ irb
 
-$LOAD_PATH.push('lib')
+$LOAD_PATH.unshift('lib')
 require 'play'
-Mars::Play.run('tests/fixtures/input.txt') # or any other path with an input
+MarsRovers::Play.run('tests/fixtures/input.txt') # or any other path with an input
 ```
 
 :see_no_evil:
